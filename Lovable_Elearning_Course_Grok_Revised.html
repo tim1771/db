@@ -1,0 +1,309 @@
+<script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function filledCell(cell) {
+          return cell !== '' && cell != null;
+        }
+        function loadFileData(filename) {
+        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+            try {
+                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                var firstSheetName = workbook.SheetNames[0];
+                var worksheet = workbook.Sheets[firstSheetName];
+
+                // Convert sheet to JSON to filter blank rows
+                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                // Filter out blank rows (rows where all cells are empty, null, or undefined)
+                var filteredData = jsonData.filter(row => row.some(filledCell));
+
+                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
+                var headerRowIndex = filteredData.findIndex((row, index) =>
+                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                );
+                // Fallback
+                if (headerRowIndex === -1 || headerRowIndex > 25) {
+                  headerRowIndex = 0;
+                }
+
+                // Convert filtered JSON back to CSV
+                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
+                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                return csv;
+            } catch (e) {
+                console.error(e);
+                return "";
+            }
+        }
+        return gk_fileData[filename] || "";
+        }
+        </script><!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lovable E-Learning Course</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f3f4f6;
+      margin: 0;
+      padding: 20px;
+      line-height: 1.6;
+    }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    h1 {
+      text-align: center;
+      color: #1e40af;
+      font-size: 2rem;
+      margin-bottom: 20px;
+    }
+    .progress-bar {
+      width: 100%;
+      background-color: #e5e7eb;
+      height: 20px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+    }
+    .progress-fill {
+      height: 100%;
+      background-color: #3b82f6;
+      border-radius: 10px;
+      transition: width 0.3s ease;
+    }
+    .progress-text {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #374151;
+    }
+    .module {
+      margin-bottom: 20px;
+      border: 1px solid #d1d5db;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    .module-header {
+      background-color: #3b82f6;
+      color: white;
+      padding: 15px;
+      font-size: 1.2rem;
+      font-weight: bold;
+      cursor: pointer;
+      border-radius: 8px 8px 0 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .module-content {
+      display: none;
+      padding: 15px;
+      background-color: #fff;
+    }
+    .module-content.active {
+      display: block;
+    }
+    .task {
+      background-color: #f9fafb;
+      padding: 10px;
+      border: 1px solid #e5e7eb;
+      border-radius: 5px;
+      margin-top: 10px;
+    }
+    code {
+      background-color: #f3f4f6;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-family: monospace;
+    }
+    a {
+      color: #1e40af;
+      text-decoration: underline;
+    }
+    .final-project, .resources {
+      background-color: #fff;
+      padding: 15px;
+      border: 1px solid #d1d5db;
+      border-radius: 8px;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Interactive Lovable E-Learning Course</h1>
+    <div class="progress-bar">
+      <div class="progress-fill" id="progress-fill" style="width: 0%"></div>
+    </div>
+    <p class="progress-text">Progress: <span id="progress-text">0</span>%</p>
+
+    <div class="module">
+      <div class="module-header" onclick="toggleModule(0)">
+        <span>Module 1: Getting Started with Lovable</span>
+        <span>+</span>
+      </div>
+      <div class="module-content">
+        <h2>Overview</h2>
+        <p>Lovable is an AI-powered no-code platform that transforms your ideas into web apps using natural language prompts. It generates React/Vite apps with Supabase backend integration.</p>
+        <h3>Steps</h3>
+        <ol>
+          <li><strong>Sign Up</strong>: Create a free account at <a href="https://lovable.dev" target="_blank">lovable.dev</a> (5 daily prompts).</li>
+          <li><strong>Explore Dashboard</strong>: Check the chat window, project preview, and settings.</li>
+          <li><strong>Create App</strong>: Use the prompt: <code>"Create a to-do list app where users can add, edit, and delete tasks with a modern, colorful design."</code></li>
+        </ol>
+        <div class="task">
+          <p><strong>Task</strong>: Create a to-do list app using the prompt above.</p>
+          <p><strong>Challenge</strong>: Add, edit, and delete a task in the preview window.</p>
+          <p><strong>Tip</strong>: Be specific in prompts (e.g., mention 'mobile-friendly').</p>
+        </div>
+        <p><strong>Key Takeaways</strong>: Free plan has 5 prompts/day; apps use React/Vite.</p>
+      </div>
+    </div>
+
+    <div class="module">
+      <div class="module-header" onclick="toggleModule(1)">
+        <span>Module 2: Customizing Your App</span>
+        <span>+</span>
+      </div>
+      <div class="module-content">
+        <h2>Overview</h2>
+        <p>Refine your app’s UI and functionality using Lovable’s chat interface and "Select & Edit" feature.</p>
+        <h3>Steps</h3>
+        <ol>
+          <li><strong>Refine UI</strong>: Prompt: <code>"Make the to-do list app mobile-responsive with a blue and white color scheme."</code></li>
+          <li><strong>Add Features</strong>: Prompt: <code>"Add a feature to categorize tasks (e.g., Work, Personal) and filter them."</code></li>
+          <li><strong>Debug</strong>: Prompt: <code>"Fix the bug where tasks disappear after refreshing."</code></li>
+        </ol>
+        <div class="task">
+          <p><strong>Task</strong>: Add a dark mode toggle to your app.</p>
+          <p><strong>Challenge</strong>: Test responsiveness on mobile and desktop.</p>
+          <p><strong>Tip</strong>: Use clear prompts to specify colors or behaviors.</p>
+        </div>
+        <p><strong>Key Takeaways</strong>: Iterative design and visual editing simplify customization.</p>
+      </div>
+    </div>
+
+    <div class="module">
+      <div class="module-header" onclick="toggleModule(2)">
+        <span>Module 3: Integrating Supabase</span>
+        <span>+</span>
+      </div>
+      <div class="module-content">
+        <h2>Overview</h2>
+        <p>Add persistent storage and authentication using Supabase.</p>
+        <h3>Steps</h3>
+        <ol>
+          <li><strong>Set Up Supabase</strong>: Create an account at <a href="https://supabase.com" target="_blank">supabase.com</a> and get API keys.</li>
+          <li><strong>Integrate</strong>: Prompt: <code>"Connect my to-do list app to Supabase for authentication and task storage."</code></li>
+          <li><strong>Add Authentication</strong>: Prompt: <code>"Add a login page with email and password."</code></li>
+          <li><strong>Store Tasks</strong>: Prompt: <code>"Save tasks to Supabase for persistence."</code></li>
+        </ol>
+        <div class="task">
+          <p><strong>Task</strong>: Add public/private task visibility.</p>
+          <p><strong>Challenge</strong>: Test visibility with two user accounts.</p>
+          <p><strong>Tip</strong>: Ensure Supabase table permissions are correct.</p>
+        </div>
+        <p><strong>Key Takeaways</strong>: Supabase enables scalable backend integration.</p>
+      </div>
+    </div>
+
+    <div class="module">
+      <div class="module-header" onclick="toggleModule(3)">
+        <span>Module 4: Monetizing with Stripe</span>
+        <span>+</span>
+      </div>
+      <div class="module-content">
+        <h2>Overview</h2>
+        <p>Add payments using Stripe for subscriptions or one-time purchases.</p>
+        <h3>Steps</h3>
+        <ol>
+          <li><strong>Set Up Stripe</strong>: Create an account at <a href="https://stripe.com" target="_blank">stripe.com</a> and get API keys.</li>
+          <li><strong>Integrate</strong>: Prompt: <code>"Add a $5/month Stripe subscription for priority task highlighting."</code></li>
+          <li><strong>Test Payments</strong>: Use Stripe’s test card (4242 4242 4242 4242).</li>
+        </ol>
+        <div class="task">
+          <p><strong>Task</strong>: Add a $10 one-time payment for a premium theme.</p>
+          <p><strong>Challenge</strong>: Test the payment flow and theme application.</p>
+          <p><strong>Tip</strong>: Use Stripe’s test mode before going live.</p>
+        </div>
+        <p><strong>Key Takeaways</strong>: Stripe enables easy monetization.</p>
+      </div>
+    </div>
+
+    <div class="module">
+      <div class="module-header" onclick="toggleModule(4)">
+        <span>Module 5: Deploying Your App</span>
+        <span>+</span>
+      </div>
+      <div class="module-content">
+        <h2>Overview</h2>
+        <p>Publish your app to a subdomain or custom domain.</p>
+        <h3>Steps</h3>
+        <ol>
+          <li><strong>Preview</strong>: Test all features in Lovable’s live rendering.</li>
+          <li><strong>Publish</strong>: Click "Publish" and choose a subdomain (e.g., yourapp.lovable.app).</li>
+          <li><strong>Test Live</strong>: Access and test the app via the URL.</li>
+          <li><strong>Sync GitHub</strong>: Prompt: <code>"Sync my app with a GitHub repository."</code></li>
+        </ol>
+        <div class="task">
+          <p><strong>Task</strong>: Deploy your app and share the URL.</p>
+          <p><strong>Challenge</strong>: Change button color to green and redeploy.</p>
+          <p><strong>Tip</strong>: Use collaboration features for team feedback.</p>
+        </div>
+        <p><strong>Key Takeaways</strong>: One-click deployment simplifies publishing.</p>
+      </div>
+    </div>
+
+    <div class="final-project">
+      <h2>Final Project: Course Management App</h2>
+      <p>Create a course management app with:</p>
+      <ul style="list-style-type: disc; margin-left: 20px;">
+        <li>Supabase authentication and course storage.</li>
+        <li>$10/month subscription for premium courses (Stripe).</li>
+        <li>Deploy to a custom domain.</li>
+      </ul>
+      <p><strong>Prompt Example</strong>: <code>"Create a course management app with user login, course creation, and a $10/month subscription for premium courses."</code></p>
+      <p><strong>Deliverable</strong>: Share the deployed app URL.</p>
+    </div>
+
+    <div class="resources">
+      <h2>Additional Resources</h2>
+      <ul style="list-style-type: disc; margin-left: 20px;">
+        <li><a href="https://docs.lovable.dev" target="_blank">Lovable Documentation</a></li>
+        <li><a href="https://lovable.dev" target="_blank">Join Lovable Community</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <script>
+    let progress = 0;
+    const progressFill = document.getElementById('progress-fill');
+    const progressText = document.getElementById('progress-text');
+    const moduleHeaders = document.querySelectorAll('.module-header');
+    const moduleContents = document.querySelectorAll('.module-content');
+
+    function toggleModule(index) {
+      const content = moduleContents[index];
+      const header = moduleHeaders[index];
+      const isActive = content.classList.contains('active');
+
+      // Close all modules
+      moduleContents.forEach((c, i) => {
+        c.classList.remove('active');
+        moduleHeaders[i].querySelector('span:last-child').textContent = '+';
+      });
+
+      // Open selected module if it wasn't already open
+      if (!isActive) {
+        content.classList.add('active');
+        header.querySelector('span:last-child').textContent = '−';
+        progress = Math.min(progress + 20, 100); // 5 modules = 100%
+        progressFill.style.width = `${progress}%`;
+        progressText.textContent = progress;
+      }
+    }
+  </script>
+</body>
+</html>
