@@ -1,0 +1,23 @@
+{
+  "worklocal_training_content": [
+    {
+      "id": "1757620231983",
+      "title": "logo",
+      "category": "images",
+      "description": "",
+      "url": "blob:null/37c1916a-ce56-4a02-950d-c4f912b36968",
+      "tags": [],
+      "file": {
+        "name": "workLocal logo.png",
+        "size": 30374,
+        "type": "image/png",
+        "url": "blob:null/37c1916a-ce56-4a02-950d-c4f912b36968"
+      },
+      "dateAdded": "2025-09-11T19:50:31.983Z",
+      "dateModified": "2025-09-11T19:50:31.983Z"
+    }
+  ],
+  "exportDate": "2025-09-11T19:58:45.154Z",
+  "version": "1.0",
+  "source": "workLocal Training Dashboard"
+}
