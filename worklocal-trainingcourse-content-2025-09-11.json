@@ -1,0 +1,57 @@
+{
+  "worklocal_training_content": [
+    {
+      "id": "github_json_1757091835515_1757621004303",
+      "title": "active listening",
+      "category": "presentations",
+      "description": "",
+      "url": "blob:null/3263c4d1-d430-463d-b90a-b41fba1cfeb7",
+      "tags": [],
+      "file": {
+        "name": "Active_Listening_Skills_TrainingWL.pptx",
+        "size": 972097,
+        "type": "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+        "url": "blob:null/3263c4d1-d430-463d-b90a-b41fba1cfeb7"
+      },
+      "dateAdded": "2025-09-11T20:03:24.303Z",
+      "dateModified": "2025-09-11T20:03:24.303Z",
+      "source": "github-json"
+    },
+    {
+      "id": "github_json_1757620231983_1757621004397",
+      "title": "logo",
+      "category": "images",
+      "description": "",
+      "url": "blob:null/37c1916a-ce56-4a02-950d-c4f912b36968",
+      "tags": [],
+      "file": {
+        "name": "workLocal logo.png",
+        "size": 30374,
+        "type": "image/png",
+        "url": "blob:null/37c1916a-ce56-4a02-950d-c4f912b36968"
+      },
+      "dateAdded": "2025-09-11T20:03:24.397Z",
+      "dateModified": "2025-09-11T20:03:24.397Z",
+      "source": "github-json"
+    },
+    {
+      "id": "1757621489217",
+      "title": "Prompt Engineering",
+      "category": "courses",
+      "description": "",
+      "url": "blob:null/7fb63287-f5f1-465b-8d65-a32d7baf7502",
+      "tags": [],
+      "file": {
+        "name": "prompt_engineering_ecourse.html",
+        "size": 19379,
+        "type": "text/html",
+        "url": "blob:null/7fb63287-f5f1-465b-8d65-a32d7baf7502"
+      },
+      "dateAdded": "2025-09-11T20:11:29.217Z",
+      "dateModified": "2025-09-11T20:11:29.217Z"
+    }
+  ],
+  "exportDate": "2025-09-11T20:11:41.090Z",
+  "version": "1.0",
+  "source": "workLocal Training Dashboard"
+}
